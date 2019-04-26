@@ -26,3 +26,27 @@ void loop () {
   Serial.print("TOO LOW: ");
   Serial.print(isLowSensorValue);
 }
+
+
+
+// ROBOJAX CODE /////////////////////////////////////////
+
+#define DETECT 2
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(DETECT, INPUT);
+}
+
+void loop () {
+  int detected = digitalRead(DETECT);
+
+  if (detected == HIGH) {
+    Serial.println("Detected!");
+  } else {
+    Serial.println("No Laser!");
+  }
+
+
+  delay(200);
+}
