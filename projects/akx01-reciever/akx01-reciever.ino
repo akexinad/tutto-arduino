@@ -1,52 +1,38 @@
-const int isHighSensorPin = A2;
-const int isLevelSensorPin = A1;
-const int isLowSensorPin = A0;
-
-int isHighSensorValue = 0;
-int isLevelSensorValue = 0;
-int isLowSensorValue = 0;
+const int isTooHighSensorPin = 0;
+const int isHighSensorPin = 2;
+const int isLevelSensorPin = 7;
+const int isLowSensorPin = 11;
+const int isTooLowSensorPin = 13;
 
 void setup() {
   Serial.begin(9600);
+  pinMode(isTooHighSensorPin, INPUT);
+  pinMode(isHighSensorPin, INPUT);
+  pinMode(isLevelSensorPin, INPUT);
+  pinMode(isLowSensorPin, INPUT);
+  pinMode(isTooLowSensorPin, INPUT);
 }
 
 void loop () {
-  isHighSensorValue = analogRead(isHighSensorPin);
-  delay(250);
-  isLevelSensorValue = analogRead(isLevelSensorPin);
-  delay(250);
-  isLowSensorValue = analogRead(isLowSensorPin);
-  delay(250);
+  int isTooHigh = digitalRead(isTooHighSensorPin);
+  int isHigh = digitalRead(isHighSensorPin);
+  int isLevel = digitalRead(isLevelSensorPin);
+  int isLow = digitalRead(isLowSensorPin);
+  int isTooLow = digitalRead(isTooLowSensorPin);
 
-  Serial.print("Sensor Values:");
-  Serial.println("TOO HIGH: ");
-  Serial.print(isHighSensorValue);
-  Serial.print("LEVEL: ");
-  Serial.print(isLevelSensorValue);
-  Serial.print("TOO LOW: ");
-  Serial.print(isLowSensorValue);
-}
-
-
-
-// ROBOJAX CODE /////////////////////////////////////////
-
-#define DETECT 2
-
-void setup() {
-  Serial.begin(9600);
-  pinMode(DETECT, INPUT);
-}
-
-void loop () {
-  int detected = digitalRead(DETECT);
-
-  if (detected == HIGH) {
-    Serial.println("Detected!");
+  if (isTooHigh == HIGH) {
+    Serial.println("TOO HIGH");
+  } else if (isHigh == HIGH) {
+    Serial.println("High");
+  } else if (isLevel == HIGH) {
+    Serial.println("LEVEL");
+  } else if (isLow == HIGH) {
+    Serial.println("Low");
+  } else if (isTooLow == HIGH) {
+    Serial.println("TOO LOW");
   } else {
-    Serial.println("No Laser!");
+    Serial.println("No Signal");
   }
 
-
-  delay(200);
+  delay(50);
 }
